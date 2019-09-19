@@ -22,7 +22,7 @@ export default class Checkout extends Component {
     }
 
     onSubmitConfirm = () => {
-        
+        alert("Success!")
     }
     render() {
         return(

@@ -34,7 +34,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Bike Rentals</h1>
+        <Link to="/"><h1>Bike Rentals</h1></Link>
         <h4><Link to="/cart">View Cart</Link>: {this.state.cart[0] && "$"}{Object.values(this.state.cart).reduce((a, {price}) => a + price, 0)}</h4>
         <Switch>
           <Route exact path="/" render={() => this.state.data && this.state.data.map((item, key) => 
