@@ -3,7 +3,6 @@ import { Grid, Image, Button } from 'semantic-ui-react'
 
 
 export default function Items(props) {
-    console.log(props)
     return(
         <div>
             <Grid celled>
@@ -14,7 +13,7 @@ export default function Items(props) {
                     <Grid.Column width={11}>
                     <h2>{props.item.name}</h2>
                     <h3>Price: ${props.item.price}</h3>
-                    <Button>Add to Cart</Button>
+                    <Button onClick={() => props.addToCart(props.item.id)}>Add to Cart</Button>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

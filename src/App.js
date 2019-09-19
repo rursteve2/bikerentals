@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import bikeRentals from './bikerentals'
 import Items from './components/Items'
+import { Link, Route, Switch } from 'react-router-dom'
+import Cart from './components/Cart'
+import Checkout from './components/Checkout'
 
 class App extends Component {
   constructor() {
@@ -20,21 +23,37 @@ class App extends Component {
     console.log(this.state.data)
   }
 
-  addToCart = (id) => {
+  addToCart = async (id) => {
     let cart = []
-    cart.push(this.state.cart)
-    
+    let item = await this.state.data.find(item => item.id === id)
+    cart = [...this.state.cart, item]
+    this.setState({cart})
+    alert("Added " + item.name + " to cart")
   }
 
   render() {
     return (
       <div className="App">
-        {this.state.data && this.state.data.map((item, key) => 
-          <Items 
-            item={item} 
-            key={key} 
-            cart={this.state.cart}/>)}
-        
+        <h1>Bike Rentals</h1>
+        <h4><Link to="/cart">View Cart</Link>: {this.state.cart[0] && "$"}{Object.values(this.state.cart).reduce((a, {price}) => a + price, 0)}</h4>
+        <Switch>
+          <Route exact path="/" render={() => this.state.data && this.state.data.map((item, key) => 
+            <Items 
+              item={item} 
+              key={key} 
+              cart={this.state.cart}
+              addToCart={this.addToCart}
+              />)}
+          />
+          <Route path="/cart" render={() => 
+            <Cart 
+            cart={this.state.cart}
+            />} />
+          <Route path="/checkout" render={() => 
+          <Checkout 
+            cart={this.state.cart}
+          />} />
+        </Switch>
       </div>
     );
   }
