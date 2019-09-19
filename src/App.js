@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import bikeRentals from './bikerentals'
+import Items from './components/Items'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      data: [],
+      cart: []
+    }
+  }
+
+  componentDidMount = async () => {
+    let data = await bikeRentals
+    this.setState({
+      data: data.products
+    })
+    console.log(this.state.data)
+  }
+
+  addToCart = (id) => {
+    let cart = []
+    cart.push(this.state.cart)
+    
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {this.state.data && this.state.data.map((item, key) => 
+          <Items 
+            item={item} 
+            key={key} 
+            cart={this.state.cart}/>)}
+        
+      </div>
+    );
+  }
 }
 
 export default App;
