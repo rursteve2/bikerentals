@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Table, Modal } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 
 
@@ -24,8 +25,14 @@ export default class Checkout extends Component {
     onSubmitConfirm = () => {
         alert("Success!")
     }
+
+    displayModal = () => {
+        let modal = document.querySelector(".modalcheckout")
+        modal.style.display = "block"
+    }
+
     render() {
-        return(
+        return(this.props.cart[0] ?
             <div>
                 <Form>
                     <Form.Group unstackable widths={2}>
@@ -39,9 +46,29 @@ export default class Checkout extends Component {
                         <label>Credit Card Number</label>
                         <input placeholder='Credit Card' name="creditcard" value={this.state.creditcard} onChange={this.onChange}/>
                     </Form.Field>
-                    <Button type='submit'>Submit</Button>
                 </Form>
-            </div>
+                <div>
+                <Modal trigger={<Button>Submit</Button>}>
+                    <Modal.Header>TOTAL: ${Object.values(this.props.cart).reduce((a, {price}) => a + price, 0).toFixed(2)}</Modal.Header>
+                    <Modal.Content>
+                    <Modal.Description>
+                        <p>SHIP TO: {this.state.name}, {this.state.street}, {this.state.city} {this.state.state}, {this.state.zip}</p>
+                        <Table celled>
+                            <Table.Body>
+                            {this.props.cart.map((item) => 
+                                <Table.Row>
+                                    <Table.Cell>{item.name}</Table.Cell>
+                                    <Table.Cell>${item.price.toFixed(2)}</Table.Cell>
+                                </Table.Row> 
+                                )}
+                            </Table.Body>
+                        </Table>
+                    </Modal.Description>
+                    </Modal.Content>
+                    <Link to="/"><Button>Submit</Button></Link>
+                </Modal>
+                </div>
+            </div> : "You need items in your cart before you can checkout"
         )
     }
 }

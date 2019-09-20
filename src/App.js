@@ -20,7 +20,6 @@ class App extends Component {
     this.setState({
       data: data.products
     })
-    console.log(this.state.data)
   }
 
   addToCart = async (id) => {
@@ -35,7 +34,7 @@ class App extends Component {
     return (
       <div className="App">
         <Link to="/"><h1>Bike Rentals</h1></Link>
-        <h4><Link to="/cart">View Cart</Link>: {this.state.cart[0] && "$"}{Object.values(this.state.cart).reduce((a, {price}) => a + price, 0)}</h4>
+        <h4><Link to="/cart">View Cart</Link>: {this.state.cart[0] && "$"}{Object.values(this.state.cart).reduce((a, {price}) => a + price, 0).toFixed(2)}</h4>
         <Switch>
           <Route exact path="/" render={() => this.state.data && this.state.data.map((item, key) => 
             <Items 
@@ -51,7 +50,7 @@ class App extends Component {
             />} />
           <Route path="/checkout" render={() => 
           <Checkout 
-            cart={this.state.cart}
+            cart={this.state.cart.map((item) => item)}
           />} />
         </Switch>
       </div>

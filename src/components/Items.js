@@ -12,7 +12,7 @@ export default function Items(props) {
                     </Grid.Column>
                     <Grid.Column width={11}>
                     <h2>{props.item.name}</h2>
-                    <h3>Price: ${props.item.price}</h3>
+                    <h3>Price: ${props.item.price.toFixed(2)}</h3>
                     <Button onClick={() => props.addToCart(props.item.id)}>Add to Cart</Button>
                     </Grid.Column>
                 </Grid.Row>
